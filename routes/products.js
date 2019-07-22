@@ -16,8 +16,16 @@ router.get('/products', (req, res, next) => {
 
     const page = req.query.page || 1;
 
+    const category = req.query.category;
+
+    const filter = {};
+
+    if (category) {
+        filter.category = category;
+    }
+
     Product
-        .find({})
+        .find(filter)
         .skip((perPage * page) - perPage)
         .limit(perPage)
         .exec((error, products) => {
@@ -35,6 +43,7 @@ router.post('/products', (req, res) => {
         name: req.body.name, 
         price: req.body.price, 
         image: req.body.image
+
     });
     product.save((err, p) => {
         if (err) {
