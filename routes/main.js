@@ -18,22 +18,4 @@ router.get('/generate-fake-data', (req, res, next) => {
   res.end()
 })
 
-router.get('/products', (req, res, next) => {
-  const perPage = 9; 
-
-  const page = req.query.page || 1;
-
-  Product
-    .find({})
-    .skip((perPage * page) - perPage)
-    .limit(perPage)
-    .exec((error, products) => {
-      Product.count().exec((err, count) => {
-        if (err) return next(err)
-
-        res.send(products)
-      })
-    })
-})
-
 module.exports = router;
