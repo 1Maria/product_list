@@ -13,19 +13,27 @@ router.param('product', (req, res, next, id) => {
 
 router.get('/products', (req, res, next) => {
     const perPage = 9;
-
     const page = req.query.page || 1;
 
     const category = req.query.category;
+    const price = req.query.price;
 
     const filter = {};
+    const priceSort = {};
 
     if (category) {
         filter.category = category;
     }
 
+    if (price === 'highest') {
+        priceSort.price = -1;
+    } else if (price === 'lowest') {
+        priceSort.price = 1;
+    } 
+
     Product
         .find(filter)
+        .sort(priceSort)
         .skip((perPage * page) - perPage)
         .limit(perPage)
         .exec((error, products) => {
@@ -43,7 +51,7 @@ router.post('/products', (req, res) => {
         name: req.body.name, 
         price: req.body.price, 
         image: req.body.image
-
+        //TODO: figure out if I need to add the reviews in here 
     });
     product.save((err, p) => {
         if (err) {
