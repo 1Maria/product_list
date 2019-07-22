@@ -18,12 +18,8 @@ router.get('/products', (req, res, next) => {
     const category = req.query.category;
     const price = req.query.price;
 
-    const filter = {};
+    const filter = category ? {category} : {};
     const priceSort = {};
-
-    if (category) {
-        filter.category = category;
-    }
 
     if (price === 'highest') {
         priceSort.price = -1;
