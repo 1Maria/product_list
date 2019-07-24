@@ -47,7 +47,6 @@ router.post('/products', (req, res) => {
         name: req.body.name, 
         price: req.body.price, 
         image: req.body.image
-        //TODO: figure out if I need to add the reviews in here 
     });
     product.save((err, p) => {
         if (err) {
