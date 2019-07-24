@@ -19,14 +19,6 @@ class SearchBar extends Component {
     });
   }
 
-//   onFormSubmit(event) {
-//     event.preventDefault();
-
-//     // We need to go and fetch product data
-
-//     //this.setState({ term: '' });
-//   }
-
   render() {
     return (
       <form className="input-group">
