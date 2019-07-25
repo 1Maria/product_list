@@ -18,15 +18,15 @@ class ProductsList extends Component {
     }
   }
   render() {
-    console.log(this.props.match, "match")
     return (
       <div>
-        { this.props.products.map(p =>
+        { this.props.products.map((p, i) =>
           <Product
             name={p.name}
             category={p.category}
             price={p.price}
             image={p.image}
+            key={i}
           />) }
           <Paginate
             productsCount={this.props.productsCount} />
@@ -36,7 +36,6 @@ class ProductsList extends Component {
 }
 
 function mapStateToProps({ products, productsCount }, ownProps) {
-  console.log(ownProps);
   return {
     products,
     productsCount,

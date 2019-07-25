@@ -14,8 +14,6 @@ export function fetchProducts(page=1, category, price) {
   }
   const request = axios.get(url);
 
-  console.log('Request', request);
-
   return {
     type: FETCH_PRODUCTS,
     payload: request
@@ -27,8 +25,6 @@ export const FETCH_PRODUCTS_COUNT = 'FETCH_PRODUCTS_COUNT';
 export function fetchProductsCount() {
   let url = `${ROOT_URL}/products/count`;
   const request = axios.get(url);
-
-  console.log('Request', request);
 
   return {
     type: FETCH_PRODUCTS_COUNT,
