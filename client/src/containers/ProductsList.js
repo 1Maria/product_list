@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Product from '../components/Product';
-import { fetchProducts } from '../actions';
+import { fetchProducts, fetchProductsCount } from '../actions';
 import { bindActionCreators } from 'redux';
+import Paginate from '../components/Paginate';
+import { withRouter } from 'react-router-dom';
 
 class ProductsList extends Component {
   componentDidMount(){
-    this.props.fetchProducts();
+    const currentPage = this.props.match.params.page || 1;
+    this.props.fetchProducts(currentPage);
+    this.props.fetchProductsCount();
+  }
+  componentDidUpdate(previousProps){
+    if (previousProps.match.params.page !== this.props.match.params.page) {
+      this.props.fetchProducts(this.props.match.params.page);
+    }
   }
   render() {
-    console.log(this.props)
+    console.log(this.props.match, "match")
     return (
       <div>
         { this.props.products.map(p =>
@@ -19,20 +28,24 @@ class ProductsList extends Component {
             price={p.price}
             image={p.image}
           />) }
+          <Paginate
+            productsCount={this.props.productsCount} />
       </div>
     )
   }
 }
 
-function mapStateToProps({ products }) {
-  console.log(products);
+function mapStateToProps({ products, productsCount }, ownProps) {
+  console.log(ownProps);
   return {
-    products
+    products,
+    productsCount,
+    ownProps
   };
 }
 
 function mapDispatchToProps(dispatch) {
- return bindActionCreators({ fetchProducts }, dispatch);
+ return bindActionCreators({ fetchProducts, fetchProductsCount }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsList);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ProductsList));

@@ -4,12 +4,18 @@ const {Review} = require('../models/review');
 
 router.param('product', (req, res, next, id) => {
     Product
-    .findById(id) 
+    .findById(id)
     .exec((err, product) => {
         req.product = product;
         next()
     });
 });
+
+router.get('/products/count', (req, res) => {
+  Product.countDocuments({}, (err, count) => {
+    res.send({count})
+  })
+})
 
 router.get('/products', (req, res, next) => {
     const perPage = 9;
@@ -25,7 +31,7 @@ router.get('/products', (req, res, next) => {
         priceSort.price = -1;
     } else if (price === 'lowest') {
         priceSort.price = 1;
-    } 
+    }
 
     Product
         .find(filter)
@@ -43,17 +49,17 @@ router.get('/products', (req, res, next) => {
 
 router.post('/products', (req, res) => {
     const product = new Product({
-        category: req.body.category, 
-        name: req.body.name, 
-        price: req.body.price, 
+        category: req.body.category,
+        name: req.body.name,
+        price: req.body.price,
         image: req.body.image
     });
     product.save((err, p) => {
         if (err) {
             res.status(500);
             res.send(err);
-            return 
-        } 
+            return
+        }
         res.send(p);
     });
 });
@@ -69,8 +75,8 @@ router.delete('/products/:product', (req, res) => {
 
 router.post('/products/:product/reviews', (req, res) => {
     const review = new Review({
-        userName: req.body.userName, 
-        text: req.body.text, 
+        userName: req.body.userName,
+        text: req.body.text,
         product: req.product._id
     });
       review.save((err, r) => {
