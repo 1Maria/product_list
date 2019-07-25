@@ -10,7 +10,7 @@ const Product = ({
     <span>{category}</span><br/>
     <span>{price}</span><br/>
     <span>{image}</span><br/>
-    <span>{name}</span>
+    <span>{name}</span><br/><br/>
   </div>
 )
 
