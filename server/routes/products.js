@@ -12,7 +12,9 @@ router.param('product', (req, res, next, id) => {
 });
 
 router.get('/products/count', (req, res) => {
-  Product.countDocuments({}, (err, count) => {
+  const category = req.query.category || '';
+  const options = category ? {category} : {}
+  Product.countDocuments(options, (err, count) => {
     res.send({count})
   })
 })

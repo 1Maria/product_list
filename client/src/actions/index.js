@@ -22,8 +22,11 @@ export function fetchProducts(page=1, category, price) {
 
 export const FETCH_PRODUCTS_COUNT = 'FETCH_PRODUCTS_COUNT';
 
-export function fetchProductsCount() {
+export function fetchProductsCount(category='') {
   let url = `${ROOT_URL}/products/count`;
+  if (category) {
+    url=`${url}?category=${category}`;
+  }
   const request = axios.get(url);
 
   return {
