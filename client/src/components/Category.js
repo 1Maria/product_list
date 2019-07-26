@@ -26,9 +26,9 @@ const Category = ({handleChange}) => {
     "Computers"
   ];
   return (
-    <div>
-      <label htmlFor="categories">Category</label>
-      <select id="categories" onChange={handleChange}>
+    <div className="form-group">
+      <label htmlFor="categories">filter by category:</label>
+      <select className="form-control" id="categories" onChange={handleChange}>
         <option value=""></option>
         {categories.map((c,i) => <option key={i} value={c}>{c}</option>)}
       </select>

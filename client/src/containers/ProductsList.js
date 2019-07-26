@@ -41,25 +41,41 @@ class ProductsList extends Component {
   handlePrices(e){
     this.setState({price: e.target.value});
     this.props.fetchProducts(1, this.state.category, e.target.value);
-    //this.props.fetchProductsCount(e.target.value);
-    //this.props.history.push('/products/1');
   }
 
   render() {
     return (
-      <div>
-        <Category handleChange={this.handleCategories}/>
-        <Price handleChange={this.handlePrices} />
+      <div className="container">
+        <h1 className="title text-center">Products</h1>
+        <div className="row">
+          <div className="ml-md-auto col-md-4">
+            <Category handleChange={this.handleCategories}/>
+          </div>
+          <div className="ml-md-auto col-md-4">
+            <Price handleChange={this.handlePrices} />
+          </div>
+        </div>
+        <div className="row">
+        <div className="card-deck">
         { this.props.products.map((p, i) =>
-          <Product
-            name={p.name}
-            category={p.category}
-            price={p.price}
-            image={p.image}
-            key={i}
-          />) }
-        <Paginate
+          <div className="col-sm-4" key={i}>
+            <Product
+              name={p.name}
+              category={p.category}
+              price={p.price}
+              image={p.image}
+              key={i}
+            />
+          </div>
+        )}
+        </div>
+        </div>
+        <div className="row">
+          <div className="col-md">
+          <Paginate
             productsCount={this.props.productsCount} />
+        </div>
+        </div>
       </div>
     )
   }
